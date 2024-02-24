@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package blog_storage_svr;
+
+option go_package = "../blog_storage_svr";
+
+// 分页
+message Page{
+  uint32 offset = 1;
+  uint32 limit = 2;
+}
+
+// 分类数据
+message Category{
+  int64 id = 1;
+  string name = 2;
+  string desc = 3;
+  uint32 status = 4;
+  int64 create_ts = 5;
+  int64 update_ts = 6;
+}
+
+message SelectCategoryListReq{
+  Page page = 1;
+}
+
+message SelectCategoryListRsp{
+  int64 code = 1;
+  string msg = 2;
+  repeated Category category_list = 3;
+  int64 total = 4;
+}
+
+message GetCategoryReq{
+  int64 id = 1;
+}
+
+message GetCategoryRsp{
+  int64 code = 1;
+  string msg = 2;
+  Category category_info = 3;
+}
+
+message UpdateCategoryReq{
+  Category category_info = 1;
+}
+
+message UpdateCategoryRsp{
+  int64 code = 1;
+  string msg = 2;
+}
+
+message CreateCategoryReq{
+  Category category_info = 1;
+}
+
+message CreateCategoryRsp{
+  int64 code = 1;
+  string msg = 2;
+}
+
+service blog_storage_svr{
+  rpc SelectCategoryList(SelectCategoryListReq) returns (SelectCategoryListRsp);
+  rpc GetCategory(GetCategoryReq) returns (GetCategoryRsp);
+  rpc UpdateCategory(UpdateCategoryReq) returns (UpdateCategoryRsp);
+  rpc CreateCategory(CreateCategoryReq) returns (CreateCategoryRsp);
+}
