@@ -12,7 +12,7 @@ message Page{
 
 // 分类数据
 message Category{
-  int64 id = 1;
+  uint64 id = 1;
   string name = 2;
   string desc = 3;
   uint32 status = 4;
@@ -33,7 +33,7 @@ message SelectCategoryListRsp{
 }
 
 message GetCategoryReq{
-  int64 id = 1;
+  uint64 id = 1;
 }
 
 message GetCategoryRsp{
