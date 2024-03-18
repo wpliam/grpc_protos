@@ -27,6 +27,10 @@ const (
 	BlogStorageSvr_GetTag_FullMethodName             = "/blog_storage_svr.blog_storage_svr/GetTag"
 	BlogStorageSvr_UpdateTag_FullMethodName          = "/blog_storage_svr.blog_storage_svr/UpdateTag"
 	BlogStorageSvr_CreateTag_FullMethodName          = "/blog_storage_svr.blog_storage_svr/CreateTag"
+	BlogStorageSvr_SelectUserList_FullMethodName     = "/blog_storage_svr.blog_storage_svr/SelectUserList"
+	BlogStorageSvr_GetUser_FullMethodName            = "/blog_storage_svr.blog_storage_svr/GetUser"
+	BlogStorageSvr_CreateUser_FullMethodName         = "/blog_storage_svr.blog_storage_svr/CreateUser"
+	BlogStorageSvr_UpdateUser_FullMethodName         = "/blog_storage_svr.blog_storage_svr/UpdateUser"
 )
 
 // BlogStorageSvrClient is the client API for BlogStorageSvr service.
@@ -41,6 +45,10 @@ type BlogStorageSvrClient interface {
 	GetTag(ctx context.Context, in *GetTagReq, opts ...grpc.CallOption) (*GetTagRsp, error)
 	UpdateTag(ctx context.Context, in *UpdateTagReq, opts ...grpc.CallOption) (*UpdateTagRsp, error)
 	CreateTag(ctx context.Context, in *CreateTagReq, opts ...grpc.CallOption) (*CreateTagRsp, error)
+	SelectUserList(ctx context.Context, in *SelectUserListReq, opts ...grpc.CallOption) (*SelectUserListRsp, error)
+	GetUser(ctx context.Context, in *GetUserReq, opts ...grpc.CallOption) (*GetUserRsp, error)
+	CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserRsp, error)
+	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserRsp, error)
 }
 
 type blogStorageSvrClient struct {
@@ -123,6 +131,42 @@ func (c *blogStorageSvrClient) CreateTag(ctx context.Context, in *CreateTagReq, 
 	return out, nil
 }
 
+func (c *blogStorageSvrClient) SelectUserList(ctx context.Context, in *SelectUserListReq, opts ...grpc.CallOption) (*SelectUserListRsp, error) {
+	out := new(SelectUserListRsp)
+	err := c.cc.Invoke(ctx, BlogStorageSvr_SelectUserList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogStorageSvrClient) GetUser(ctx context.Context, in *GetUserReq, opts ...grpc.CallOption) (*GetUserRsp, error) {
+	out := new(GetUserRsp)
+	err := c.cc.Invoke(ctx, BlogStorageSvr_GetUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogStorageSvrClient) CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserRsp, error) {
+	out := new(CreateUserRsp)
+	err := c.cc.Invoke(ctx, BlogStorageSvr_CreateUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogStorageSvrClient) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserRsp, error) {
+	out := new(UpdateUserRsp)
+	err := c.cc.Invoke(ctx, BlogStorageSvr_UpdateUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BlogStorageSvrServer is the server API for BlogStorageSvr service.
 // All implementations should embed UnimplementedBlogStorageSvrServer
 // for forward compatibility
@@ -135,6 +179,10 @@ type BlogStorageSvrServer interface {
 	GetTag(context.Context, *GetTagReq) (*GetTagRsp, error)
 	UpdateTag(context.Context, *UpdateTagReq) (*UpdateTagRsp, error)
 	CreateTag(context.Context, *CreateTagReq) (*CreateTagRsp, error)
+	SelectUserList(context.Context, *SelectUserListReq) (*SelectUserListRsp, error)
+	GetUser(context.Context, *GetUserReq) (*GetUserRsp, error)
+	CreateUser(context.Context, *CreateUserReq) (*CreateUserRsp, error)
+	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserRsp, error)
 }
 
 // UnimplementedBlogStorageSvrServer should be embedded to have forward compatible implementations.
@@ -164,6 +212,18 @@ func (UnimplementedBlogStorageSvrServer) UpdateTag(context.Context, *UpdateTagRe
 }
 func (UnimplementedBlogStorageSvrServer) CreateTag(context.Context, *CreateTagReq) (*CreateTagRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTag not implemented")
+}
+func (UnimplementedBlogStorageSvrServer) SelectUserList(context.Context, *SelectUserListReq) (*SelectUserListRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectUserList not implemented")
+}
+func (UnimplementedBlogStorageSvrServer) GetUser(context.Context, *GetUserReq) (*GetUserRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedBlogStorageSvrServer) CreateUser(context.Context, *CreateUserReq) (*CreateUserRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
+}
+func (UnimplementedBlogStorageSvrServer) UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 
 // UnsafeBlogStorageSvrServer may be embedded to opt out of forward compatibility for this service.
@@ -321,6 +381,78 @@ func _BlogStorageSvr_CreateTag_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BlogStorageSvr_SelectUserList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectUserListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogStorageSvrServer).SelectUserList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlogStorageSvr_SelectUserList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogStorageSvrServer).SelectUserList(ctx, req.(*SelectUserListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogStorageSvr_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogStorageSvrServer).GetUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlogStorageSvr_GetUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogStorageSvrServer).GetUser(ctx, req.(*GetUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogStorageSvr_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogStorageSvrServer).CreateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlogStorageSvr_CreateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogStorageSvrServer).CreateUser(ctx, req.(*CreateUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogStorageSvr_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogStorageSvrServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlogStorageSvr_UpdateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogStorageSvrServer).UpdateUser(ctx, req.(*UpdateUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BlogStorageSvr_ServiceDesc is the grpc.ServiceDesc for BlogStorageSvr service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -359,6 +491,22 @@ var BlogStorageSvr_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateTag",
 			Handler:    _BlogStorageSvr_CreateTag_Handler,
+		},
+		{
+			MethodName: "SelectUserList",
+			Handler:    _BlogStorageSvr_SelectUserList_Handler,
+		},
+		{
+			MethodName: "GetUser",
+			Handler:    _BlogStorageSvr_GetUser_Handler,
+		},
+		{
+			MethodName: "CreateUser",
+			Handler:    _BlogStorageSvr_CreateUser_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _BlogStorageSvr_UpdateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
