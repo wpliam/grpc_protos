@@ -23,6 +23,10 @@ const (
 	BlogStorageSvr_GetCategory_FullMethodName        = "/blog_storage_svr.blog_storage_svr/GetCategory"
 	BlogStorageSvr_UpdateCategory_FullMethodName     = "/blog_storage_svr.blog_storage_svr/UpdateCategory"
 	BlogStorageSvr_CreateCategory_FullMethodName     = "/blog_storage_svr.blog_storage_svr/CreateCategory"
+	BlogStorageSvr_SelectTagList_FullMethodName      = "/blog_storage_svr.blog_storage_svr/SelectTagList"
+	BlogStorageSvr_GetTag_FullMethodName             = "/blog_storage_svr.blog_storage_svr/GetTag"
+	BlogStorageSvr_UpdateTag_FullMethodName          = "/blog_storage_svr.blog_storage_svr/UpdateTag"
+	BlogStorageSvr_CreateTag_FullMethodName          = "/blog_storage_svr.blog_storage_svr/CreateTag"
 )
 
 // BlogStorageSvrClient is the client API for BlogStorageSvr service.
@@ -33,6 +37,10 @@ type BlogStorageSvrClient interface {
 	GetCategory(ctx context.Context, in *GetCategoryReq, opts ...grpc.CallOption) (*GetCategoryRsp, error)
 	UpdateCategory(ctx context.Context, in *UpdateCategoryReq, opts ...grpc.CallOption) (*UpdateCategoryRsp, error)
 	CreateCategory(ctx context.Context, in *CreateCategoryReq, opts ...grpc.CallOption) (*CreateCategoryRsp, error)
+	SelectTagList(ctx context.Context, in *SelectTagListReq, opts ...grpc.CallOption) (*SelectTagListRsp, error)
+	GetTag(ctx context.Context, in *GetTagReq, opts ...grpc.CallOption) (*GetTagRsp, error)
+	UpdateTag(ctx context.Context, in *UpdateTagReq, opts ...grpc.CallOption) (*UpdateTagRsp, error)
+	CreateTag(ctx context.Context, in *CreateTagReq, opts ...grpc.CallOption) (*CreateTagRsp, error)
 }
 
 type blogStorageSvrClient struct {
@@ -79,6 +87,42 @@ func (c *blogStorageSvrClient) CreateCategory(ctx context.Context, in *CreateCat
 	return out, nil
 }
 
+func (c *blogStorageSvrClient) SelectTagList(ctx context.Context, in *SelectTagListReq, opts ...grpc.CallOption) (*SelectTagListRsp, error) {
+	out := new(SelectTagListRsp)
+	err := c.cc.Invoke(ctx, BlogStorageSvr_SelectTagList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogStorageSvrClient) GetTag(ctx context.Context, in *GetTagReq, opts ...grpc.CallOption) (*GetTagRsp, error) {
+	out := new(GetTagRsp)
+	err := c.cc.Invoke(ctx, BlogStorageSvr_GetTag_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogStorageSvrClient) UpdateTag(ctx context.Context, in *UpdateTagReq, opts ...grpc.CallOption) (*UpdateTagRsp, error) {
+	out := new(UpdateTagRsp)
+	err := c.cc.Invoke(ctx, BlogStorageSvr_UpdateTag_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogStorageSvrClient) CreateTag(ctx context.Context, in *CreateTagReq, opts ...grpc.CallOption) (*CreateTagRsp, error) {
+	out := new(CreateTagRsp)
+	err := c.cc.Invoke(ctx, BlogStorageSvr_CreateTag_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BlogStorageSvrServer is the server API for BlogStorageSvr service.
 // All implementations should embed UnimplementedBlogStorageSvrServer
 // for forward compatibility
@@ -87,6 +131,10 @@ type BlogStorageSvrServer interface {
 	GetCategory(context.Context, *GetCategoryReq) (*GetCategoryRsp, error)
 	UpdateCategory(context.Context, *UpdateCategoryReq) (*UpdateCategoryRsp, error)
 	CreateCategory(context.Context, *CreateCategoryReq) (*CreateCategoryRsp, error)
+	SelectTagList(context.Context, *SelectTagListReq) (*SelectTagListRsp, error)
+	GetTag(context.Context, *GetTagReq) (*GetTagRsp, error)
+	UpdateTag(context.Context, *UpdateTagReq) (*UpdateTagRsp, error)
+	CreateTag(context.Context, *CreateTagReq) (*CreateTagRsp, error)
 }
 
 // UnimplementedBlogStorageSvrServer should be embedded to have forward compatible implementations.
@@ -104,6 +152,18 @@ func (UnimplementedBlogStorageSvrServer) UpdateCategory(context.Context, *Update
 }
 func (UnimplementedBlogStorageSvrServer) CreateCategory(context.Context, *CreateCategoryReq) (*CreateCategoryRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCategory not implemented")
+}
+func (UnimplementedBlogStorageSvrServer) SelectTagList(context.Context, *SelectTagListReq) (*SelectTagListRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectTagList not implemented")
+}
+func (UnimplementedBlogStorageSvrServer) GetTag(context.Context, *GetTagReq) (*GetTagRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTag not implemented")
+}
+func (UnimplementedBlogStorageSvrServer) UpdateTag(context.Context, *UpdateTagReq) (*UpdateTagRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTag not implemented")
+}
+func (UnimplementedBlogStorageSvrServer) CreateTag(context.Context, *CreateTagReq) (*CreateTagRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTag not implemented")
 }
 
 // UnsafeBlogStorageSvrServer may be embedded to opt out of forward compatibility for this service.
@@ -189,6 +249,78 @@ func _BlogStorageSvr_CreateCategory_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BlogStorageSvr_SelectTagList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectTagListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogStorageSvrServer).SelectTagList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlogStorageSvr_SelectTagList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogStorageSvrServer).SelectTagList(ctx, req.(*SelectTagListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogStorageSvr_GetTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTagReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogStorageSvrServer).GetTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlogStorageSvr_GetTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogStorageSvrServer).GetTag(ctx, req.(*GetTagReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogStorageSvr_UpdateTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTagReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogStorageSvrServer).UpdateTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlogStorageSvr_UpdateTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogStorageSvrServer).UpdateTag(ctx, req.(*UpdateTagReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogStorageSvr_CreateTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTagReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogStorageSvrServer).CreateTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlogStorageSvr_CreateTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogStorageSvrServer).CreateTag(ctx, req.(*CreateTagReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BlogStorageSvr_ServiceDesc is the grpc.ServiceDesc for BlogStorageSvr service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -211,6 +343,22 @@ var BlogStorageSvr_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateCategory",
 			Handler:    _BlogStorageSvr_CreateCategory_Handler,
+		},
+		{
+			MethodName: "SelectTagList",
+			Handler:    _BlogStorageSvr_SelectTagList_Handler,
+		},
+		{
+			MethodName: "GetTag",
+			Handler:    _BlogStorageSvr_GetTag_Handler,
+		},
+		{
+			MethodName: "UpdateTag",
+			Handler:    _BlogStorageSvr_UpdateTag_Handler,
+		},
+		{
+			MethodName: "CreateTag",
+			Handler:    _BlogStorageSvr_CreateTag_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

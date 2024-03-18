@@ -26,7 +26,7 @@ message SelectCategoryListReq{
 }
 
 message SelectCategoryListRsp{
-  int64 code = 1;
+  int32 code = 1;
   string msg = 2;
   repeated Category category_list = 3;
   int64 total = 4;
@@ -37,7 +37,7 @@ message GetCategoryReq{
 }
 
 message GetCategoryRsp{
-  int64 code = 1;
+  int32 code = 1;
   string msg = 2;
   Category category_info = 3;
 }
@@ -47,7 +47,7 @@ message UpdateCategoryReq{
 }
 
 message UpdateCategoryRsp{
-  int64 code = 1;
+  int32 code = 1;
   string msg = 2;
 }
 
@@ -56,7 +56,57 @@ message CreateCategoryReq{
 }
 
 message CreateCategoryRsp{
-  int64 code = 1;
+  int32 code = 1;
+  string msg = 2;
+}
+
+// 标签数据
+message Tag{
+  uint64 id = 1;
+  string name = 2;
+  string desc = 3;
+  uint32 status = 4;
+  int64 create_ts = 5;
+  int64 update_ts = 6;
+}
+
+message SelectTagListReq{
+  Page page = 1;
+  string keyword = 2;
+}
+
+message SelectTagListRsp{
+  int32 code = 1;
+  string msg = 2;
+  repeated Tag tag_list = 3;
+  int64 total = 4;
+}
+
+message GetTagReq{
+  uint64 id = 1;
+}
+
+message GetTagRsp{
+  int32 code = 1;
+  string msg = 2;
+  Tag tag_info = 3;
+}
+
+message UpdateTagReq{
+  Tag tag_info = 1;
+}
+
+message UpdateTagRsp{
+  int32 code = 1;
+  string msg = 2;
+}
+
+message CreateTagReq{
+  Tag tag_info = 1;
+}
+
+message CreateTagRsp{
+  int32 code = 1;
   string msg = 2;
 }
 
@@ -65,4 +115,9 @@ service blog_storage_svr{
   rpc GetCategory(GetCategoryReq) returns (GetCategoryRsp);
   rpc UpdateCategory(UpdateCategoryReq) returns (UpdateCategoryRsp);
   rpc CreateCategory(CreateCategoryReq) returns (CreateCategoryRsp);
+
+  rpc SelectTagList(SelectTagListReq) returns (SelectTagListRsp);
+  rpc GetTag(GetTagReq) returns (GetTagRsp);
+  rpc UpdateTag(UpdateTagReq) returns (UpdateTagRsp);
+  rpc CreateTag(CreateTagReq) returns (CreateTagRsp);
 }
